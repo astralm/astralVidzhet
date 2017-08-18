@@ -7,9 +7,13 @@ var AstralWidget = function(){
 	this.socket = io("176.112.203.74:8080");
 	this.token = localStorage.getItem('widgetToken');
 	this.css = "@font-face{font-family:'Material Icons';font-style:normal;font-weight:400;src:url(https://fonts.gstatic.com/s/materialicons/v28/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw.woff2) format('woff2')}.material-icons{font-family:'Material Icons';font-weight:400;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-feature-settings:'liga';-webkit-font-smoothing:antialiased}@import url(https://fonts.googleapis.com/css?family=Roboto);.widget_title{margin:0;font-size:16px;text-align:left}h3.widget_title{margin:5px 10px}h4.widget_title{font-size:14px}.widget_wrapper.widget_close{display:none}.widget_table{border-collapse:collapse;font-family:Roboto;width:100%}.widget_body_content_column{padding:5px!important}.widget_table td{padding:0;text-align:center;vertical-align:middle}.widget_text{margin:0;text-align:left;font-size:14px;padding:5px 0}.widget_date{text-align:right;font-size:12px;padding-right:2px}.widget_header{background:#5D4037;color:#fefefe;border:2px solid #5D4037;cursor:move}.widget_body{background:#fefefe;color:#212121;border:2px solid #5D4037;border-bottom:1px solid #d4d4d4}.widget_wrapper{position:absolute;bottom:0;right:0;min-width:300px;width:inherit}.widget_message:not(:first-child){border-top:1px solid #d4d4d4}.widget_message{margin:5px 0}.widget_footer{border:2px solid #5D4037;border-top:none;background:#fefefe}.widget_input{font-size:14px;position:relative;text-align:left;padding:0 10px;outline:0;min-width:200px;word-wrap:normal;max-height:80px;overflow-y:auto;-webkit-box-sizing:border-box;box-sizing:border-box}.widget_input:before{content:attr(data-ph);width:100%;display:none;text-align:left;position:absolute;top:0;left:10px;color:#797676}.widget_input:not(:focus):empty:before{display:block}.widget_button{width:24px;height:24px;cursor:pointer;margin:0 auto}.widget_button.right{margin-left:-webkit-calc(100% - 24px);margin-left:calc(100% - 24px)}.widget_body_height_container{height:200px;overflow-y:auto}.widget_wrapper.widget_close~.widget_close_table{display:table}.widget_close_table{display:none;position:absolute;bottom:0;right:10px;background:#5D4037;color:#fefefe;width:40px;height:40px}";
-	this.dynamic = {
-		move: false
-	};
+	this.offsetX = 0;
+	this.offsetY = 0;
+	this.move = false;
+	this.moveX = false;
+	this.moveY = false;
+	this.diffX = 0;
+	this.diffY = 0;
 	this.updateSizes = function(){
 		this.dom.widgetInput.style.width = this.dom.widgetWrapper.clientWidth - 24 + "px";
 	};
@@ -37,88 +41,95 @@ var AstralWidget = function(){
 		}
 		return dom;
 	};
-	this.headerTapCalculate = function(e){
-		var eventType = e.type;
-		if(eventType == "mousedown"){
-			var tap = {
-				offsetTop: e.y,
-				offsetLeft: e.x
-			};
-		} else {
-			var tap = {
-				offsetTop: e.touches[0].pageY,
-				offsetLeft: e.touches[0].pageX
-			}
-		}
-		this.dynamic.indentY = this.dom.widgetWrapper.offsetTop - tap.offsetTop;
-		this.dynamic.indentX = tap.offsetLeft - this.dom.widgetWrapper.offsetLeft;
-	};
 	this.events = {
-		startMove: function(e){
-			e = e || window.event;
-			this.dynamic.move = true;
-			this.headerTapCalculate(e);
-		},
-		stopMove: function(e){
-			e = e || window.event;
-			this.dynamic.move = false;
-		},
-		move: function(e){
-			e = e || window.event;
-			var eventType = e.type;
-			if(eventType == "mousemove"){
-				var tap = {
-					offsetTop: e.y,
-					offsetLeft: e.x
-				};
-			} else {
-				var tap = {
-					offsetTop: e.touches[0].pageY,
-					offsetLeft: e.touches[0].pageX
-				};
-			}
-			if (this.dynamic.move && (eventType == "mousemove" || eventType == "touchmove")){
-				var top = tap.offsetTop,
-					left = tap.offsetLeft,
-					width = this.dom.widgetWrapper.offsetWidth,
-					height = this.dom.widgetWrapper.offsetHeight,
-					indentX = this.dynamic.indentX,
-					indentY = this.dynamic.indentY,
-					screenWidth = window.innerWidth,
-					screenHeight = window.innerHeight,
-					calculateX = left - indentX,
-					calculateY = top + indentY;
-				if(calculateX >= 0 && calculateX + width <= screenWidth){
-					this.dom.widgetWrapper.style.left = calculateX + "px";
-				}
-				if(calculateY + height <= screenHeight && calculateY >= 0){
-					this.dom.widgetWrapper.style.top = calculateY + "px";
-				}
-				e.preventDefault();
-			}
-		},
-		open: function(){
+		intervalMove: (function(){
+	      if(this.move){
+	      	var widget = this.dom.widgetWrapper;
+	      	if(this.moveX){
+	        	var width = widget.offsetWidth,
+	          		offsetLeft = widget.offsetLeft,
+	              screenWidth = window.innerWidth;
+	          if(offsetLeft >= 0 && offsetLeft + width <= screenWidth){
+	          	widget.style.left = this.diffX + this.offsetX + "px";
+	            if(widget.offsetLeft < 0){
+	              widget.style.left = 0 + "px";
+	            } else if(widget.offsetLeft + width > screenWidth){
+	              widget.style.left = screenWidth - width + "px";
+	            }
+	          }
+	        }
+	        if(this.moveY){
+	        	var height = widget.offsetHeight,
+	          		offsetTop = widget.offsetTop,
+	              screenHeight = window.innerHeight;
+	          if(offsetTop >= 0 && offsetTop + height <= screenHeight){
+	          	widget.style.top = this.diffY + this.offsetY + "px";
+	            if(widget.offsetTop < 0){
+	              widget.style.top = 0 + "px";
+	            } else if(widget.offsetTop + height > screenHeight){
+	              widget.style.top = screenHeight - height + "px";
+	            }
+	          }
+	        }
+	      }
+	    }).bind(this),
+		start: (function(e){
+	    	e = e || window.event;
+	    	var diffY = e.touches ? e.touches[0].pageY : e.clientY,
+				diffX = e.touches ? e.touches[0].pageX : e.clientX,
+				widget = this.dom.widgetWrapper;
+			this.offsetY = widget.offsetTop - diffY;
+			this.offsetX = widget.offsetLeft - diffX;
+			this.move = true;
+	    }).bind(this),
+		end: (function(e){
+	    	this.move = false;
+	    }).bind(this),
+		move: (function(e){
+	    	if(this.move){
+		      	e = e || window.event;
+		        var diffX = e.touches ? e.touches[0].pageX : e.clientX,
+		            diffY = e.touches ? e.touches[0].pageY : e.clientY;
+		        if(diffX != this.diffX){
+		          this.diffX = diffX;
+		          this.moveX = true;
+		        } else {
+		          this.moveX = false;
+		        }
+		        if(diffY != this.diffY){
+		          this.diffY = diffY;
+		          this.moveY = true;
+		        } else {
+		          this.moveY = false;
+		        }
+		        if(!e.touches){
+   			     	e.preventDefault();
+		        }
+	      }
+	    }).bind(this),
+		open: (function(){
 			this.dom.widgetWrapper.classList.remove("widget_close");
 			if(!this.token || this.token == "null"){
 				this.socket.emit('WIDGET_GET_TOKEN');
 			} else {
 				this.socket.emit('GET_SESSION_ID', this.token);
 			}
-		},
-		close: function(){
+			this.updateSizes();
+		}).bind(this),
+		close: (function(){
 			this.dom.widgetWrapper.classList.add("widget_close");
-		},
-		input: function(e){
+		}).bind(this),
+		input: (function(e){
 		 	e = e || window.event;
 		 	this.input = e.target.innerText;
-		},
-		send: function(){
+		}).bind(this),
+		send: (function(){
 			if(this.input){
 				this.socket.emit('WIDGET_MESSAGE', this.input);
 				this.dom.widgetInput.innerHTML = "";
 				this.input = "";
 			}
-		}
+		}).bind(this)
 	};
 	this.connectionEvents = {
 		loadDialog: function(dialog){
@@ -270,20 +281,21 @@ var AstralWidget = function(){
 		this.dom.widgetButton.removeAttribute("id");
 	};
 	this.initEvents = function(){
-		this.dom.widgetHeader.addEventListener("mousedown", this.events.startMove.bind(this));
-		this.dom.widgetHeader.addEventListener("touchstart", this.events.startMove.bind(this));
-		window.addEventListener("mouseup", this.events.stopMove.bind(this));
-		window.addEventListener("touchend", this.events.stopMove.bind(this));
-		window.addEventListener("touchmove", this.events.move.bind(this));
-		window.addEventListener('mousemove', this.events.move.bind(this));
-		this.dom.widgetCloseButton.addEventListener("click", this.events.close.bind(this));
-		this.dom.widgetOpenButton.addEventListener("click", this.events.open.bind(this));
-		this.dom.widgetInput.addEventListener("input", this.events.input.bind(this));
-		this.dom.widgetButton.addEventListener("click", this.events.send.bind(this));
+		setInterval(this.events.intervalMove, 1);
+		this.dom.widgetHeader.addEventListener("mousedown", this.events.start);
+		this.dom.widgetHeader.addEventListener("touchstart", this.events.start);
+		window.addEventListener("mouseup", this.events.end);
+		window.addEventListener("touchend", this.events.end);
+		window.addEventListener("touchmove", this.events.move);
+		window.addEventListener('mousemove', this.events.move);
+		this.dom.widgetCloseButton.addEventListener("click", this.events.close);
+		this.dom.widgetOpenButton.addEventListener("click", this.events.open);
+		this.dom.widgetInput.addEventListener("input", this.events.input);
+		this.dom.widgetButton.addEventListener("click", this.events.send);
 		this.dom.widgetInput.addEventListener("keypress", (function(e){
 			e = e || window.event;
 			if (e.keyCode == 13){
-				this.events.send.call(this);
+				this.events.send;
 				e.preventDefault();
 			}
 		}).bind(this));
@@ -300,10 +312,10 @@ var AstralWidget = function(){
 	};
 	this.init = function(){
 		this.initDom();
-		this.updateSizes();
 		this.initEvents();
 		this.initConnectionEvents();
 		this.render();
+		this.updateSizes();
 	};
 	return this;
 };
