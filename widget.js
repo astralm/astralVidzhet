@@ -133,22 +133,29 @@ var AstralWidget = function(){
 	};
 	this.connectionEvents = {
 		loadDialog: function(dialog){
-			dialog ? 
-	            dialog.map(item => (item.question_id))
-		            .filter((item, key, self) => (self.indexOf(item) != key))
-		            .filter((item, key, self) => (self.indexOf(item) == key))
-		            .forEach(item => {
-		                dialog.filter(dialog => (dialog.question_id == item))
-			                .filter((item, key) => ( key > 0 ))
-			                .map(item => (item.answer_id))
-			                .forEach(item => { 
-			                    dialog.filter(obj => (obj.answer_id == item))
-				                    .forEach(item => { 
-				                        item.question_message = null 
-				                    }) 
-		                    })
-	                }) 
-            : null;
+			if(dialog){
+	            dialog.map(function(item){
+	            	return item.question_id;
+	            }).filter(function(item, key, self){
+	            	return self.indexOf(item) != key;
+	            }).filter(function(item, key, self){
+	            	self.indexOf(item) == key;
+	            }).forEach(function(item){
+	                dialog.filter(function(dialog){
+	                	return dialog.question_id == item;
+	                }).filter(function(item, key){
+	                	return key > 0;
+	                }).map(function(item){
+	                	return item.answer_id;
+	                }).forEach(function(item){ 
+	                    dialog.filter(function(obj){
+	                    	return obj.answer_id == item;
+	                    }).forEach(function(item){ 
+		                        item.question_message = null 
+		                });
+	                });
+                });
+            }
             this.dom.widgetContainer.innerHTML = "";
             dialog.map(function(item){
             	if(item.question_message){
