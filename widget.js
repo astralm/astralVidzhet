@@ -437,7 +437,7 @@ var AstralWidget = function(){
 		this.dom.widgetInput.addEventListener("keypress", (function(e){
 			e = e || window.event;
 			if (e.keyCode == 13){
-				this.events.send;
+				this.events.send();
 				e.preventDefault();
 			}
 		}).bind(this));
