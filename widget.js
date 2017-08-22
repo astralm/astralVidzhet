@@ -275,6 +275,7 @@ var AstralWidget = function(){
 		                });
 	                });
                 });
+                console.log(dialog);
 	            this.dom.widgetContainer.innerHTML = "";
 	            dialog.map(function(item){
 	            	if(item.question_message){
@@ -436,8 +437,9 @@ var AstralWidget = function(){
 		this.dom.widgetButton.addEventListener("click", this.events.send);
 		this.dom.widgetInput.addEventListener("keypress", (function(e){
 			e = e || window.event;
+			console.log(e.keyCode);
 			if (e.keyCode == 13){
-				this.events.send;
+				this.events.send();
 				e.preventDefault();
 			}
 		}).bind(this));
