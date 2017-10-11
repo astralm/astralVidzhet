@@ -33,7 +33,7 @@ var AstralWidget = function(){
 	this.events = {
 		open: (function(){
 			this.dom.widgetWrapper.classList.remove("widget_wrapper_close");
-			if(!this.token || this.token == "null" || this.subject != localStorage.getItem('widgetType')){
+			if(!this.token || this.token == "null"){
 				this.socket.emit('WIDGET_GET_TOKEN', {subject: this.subject});
 			} else {
 				this.socket.emit('GET_SESSION_ID', this.token);
@@ -99,7 +99,6 @@ var AstralWidget = function(){
 		setToken: function(token){
 			this.token = token;
 			localStorage.setItem('widgetToken', this.token);
-			localStorage.setItem('widgetType', this.subject);
 			this.socket.emit('GET_SESSION_ID', this.token);
 		},
 		setSessionId: function(data){
