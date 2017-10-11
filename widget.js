@@ -5,7 +5,7 @@ var AstralWidget = function(){
 	this.test = document.getElementById("widgetScript").getAttribute("data-test");
 	this.socket = io(this.test ? "localhost:5000" : "astralbot.ru:8080");
 	this.token = localStorage.getItem('widgetToken');
-	this.css = "@import url(https://fonts.googleapis.com/css?family=Open+Sans);.widget_wrapper{display:block;position:fixed;bottom:20px;right:20px;width:307px;font-family:'Open Sans';background:#fafafa}.widget_header{background:green;overflow:auto;cursor:move}.widget_content{height:226px;overflow-y:auto;padding:15px 0;-webkit-box-sizing:border-box;box-sizing:border-box}.widget_message{display:inline-block;max-width:85%;clear:both;margin-bottom:15px}.widget_message:last-child{margin-bottom:0}.widget_message_left{float:left;margin-left:15px}.widget_message_right{float:right;margin-right:15px}.widget_text{font-size:14px;color:#414141;-webkit-border-radius:8px;border-radius:8px;padding:13px 17px}.widget_message_right .widget_text{background:#e9e9e9}.widget_message_left .widget_text{background:#f5f5f5}.widget_date{font-size:12px;color:#abaaaa;float:right}.widget_message_right .widget_date{margin-right:10px}.widget_form{position:relative;border-top:1px solid #f1f1f1}.widget_input{display:inline-block;position:relative;font-size:13px;color:#414141;padding:17px 16px;width:-webkit-calc(100% - 43px);width:calc(100% - 43px);-webkit-box-sizing:border-box;box-sizing:border-box;outline:0;max-height:100px;overflow-y:auto}.widget_input:before{display:none;position:absolute;content:attr(data-ph);top:17px;left:16px;color:#909090}.widget_send,.widget_send_space{top:0;right:0;position:absolute}.widget_input:empty:before{display:block}.widget_open,.widget_wrapper_close{display:none}.widget_send_space{width:43px;background:#52c306;height:100%;cursor:pointer}.widget_send{bottom:0;left:0;margin:auto}.widget_close{border:11px solid transparent;float:right;margin-top:-37px;cursor:pointer}.widget_open{position:absolute;bottom:19px;right:25px;cursor:pointer}.widget_wrapper.widget_wrapper_close~.widget_open{display:block}";
+	this.css = "@import url(https://fonts.googleapis.com/css?family=Open+Sans);.widget_wrapper{display:block;position:fixed;bottom:20px;right:20px;width:307px;font-family:'Open Sans';background:#fafafa}.widget_header{background:green;overflow:auto;cursor:move}.widget_content{height:226px;overflow-y:auto;padding:15px 0;-webkit-box-sizing:border-box;box-sizing:border-box}.widget_message{display:inline-block;max-width:85%;clear:both;margin-bottom:15px}.widget_message:last-child{margin-bottom:0}.widget_message_left{float:left;margin-left:15px}.widget_message_right{float:right;margin-right:15px}.widget_text{font-size:14px;color:#414141;-webkit-border-radius:8px;border-radius:8px;padding:13px 17px}.widget_message_right .widget_text{background:#e9e9e9}.widget_message_left .widget_text{background:#f5f5f5}.widget_date{font-size:12px;color:#abaaaa;float:right}.widget_message_right .widget_date{margin-right:10px}.widget_form{position:relative;border-top:1px solid #f1f1f1}.widget_input{display:inline-block;position:relative;font-size:13px;color:#414141;padding:17px 16px;width:-webkit-calc(100% - 43px);width:calc(100% - 43px);-webkit-box-sizing:border-box;box-sizing:border-box;outline:0;max-height:100px;overflow-y:auto}.widget_input:before{display:none;position:absolute;content:attr(data-ph);top:17px;left:16px;color:#909090}.widget_send,.widget_send_space{top:0;right:0;position:absolute}.widget_input:empty:before{display:block}.widget_open,.widget_wrapper_close{display:none}.widget_send_space{width:43px;background:#52c306;height:100%;cursor:pointer}.widget_send{bottom:0;left:0;margin:auto}.widget_close{border:11px solid transparent;float:right;margin-top:-37px;cursor:pointer}.widget_open{position:fixed;bottom:19px;right:25px;cursor:pointer}.widget_wrapper.widget_wrapper_close~.widget_open{display:block}";
 	this.createElement = function(tag, classList, options, html){
 		var dom = document.createElement(tag);
 		if(classList){
@@ -78,6 +78,7 @@ var AstralWidget = function(){
 		                });
 	                });
                 });
+                console.log(dialog);
 	            this.dom.widgetContainer.innerHTML = "";
 	            dialog.map(function(item){
 	            	if(item.question_message){
@@ -143,6 +144,7 @@ var AstralWidget = function(){
 		this.dom.widgetButton.addEventListener("click", this.events.send);
 		this.dom.widgetInput.addEventListener("keypress", (function(e){
 			e = e || window.event;
+			console.log(e.keyCode);
 			if (e.keyCode == 13){
 				this.events.send();
 				e.preventDefault();
