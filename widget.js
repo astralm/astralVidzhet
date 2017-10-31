@@ -152,6 +152,7 @@ var AstralWidget = function(){
 				this.dom.widgetTelOne.classList.remove("widget_input_error");
 				this.dom.widgetEmailOne.classList.remove("widget_input_error");
 				this.dom.widgetEmailTwo.classList.remove("widget_input_error");
+				this.events.menu("chat_layout");
 			} else {
 				if(!/^\d+$/.test(this.client_phone) || !this.client_phone.length == 11){
 					this.dom.widgetTelTwo.classList.add("widget_input_error");
@@ -169,6 +170,7 @@ var AstralWidget = function(){
 				this.events.send();
 				this.dom.widgetTelTwo.classList.remove("widget_input_error");
 				this.dom.widgetTelOne.classList.remove("widget_input_error");
+				this.events.menu("chat_layout");
 			} else {
 				this.dom.widgetTelTwo.classList.add("widget_input_error");
 				this.dom.widgetTelOne.classList.add("widget_input_error");
