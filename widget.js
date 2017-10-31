@@ -282,7 +282,7 @@ var AstralWidget = function(){
 				this.createElement('div',["helper_head"],null,[
 					this.createElement('div',["helper_head__top"],null,[
 						this.createElement('h2',null,null,[
-							document.createTextNode("Астрал")
+							document.createTextNode("Команда ЗАО \"Калуга Астрал\"")
 						]),
 						this.createElement('img',["helper_close"],{
 							"src":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPBAMAAADJ+Ih5AAAAAXNSR0IB2cksfwAAACRQTFRFubm5ubm5AAAAuLi4ubm5ubm5urq6ubm5uLi4ubm5ubm5uLi4ag/FFQAAAAx0Uk5TnHEAcP9qZ2lo86OmIppd3AAAAExJREFUeJxjYFQCAUUGBpMgECPEgEHNHUiruykwKLU0KQExkKHhAUJAhlJJUkoRmKE+a7oSmKG0ZZMSqghMDVwXzBy4yXC74LbTCwAAh58aATVCihkAAAAASUVORK5CYII=",
