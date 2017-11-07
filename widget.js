@@ -783,5 +783,7 @@ var AstralWidget = function(){
 	};
 	return this;
 };
-var AstralWidgetObject = new AstralWidget;
-AstralWidgetObject.init();
+window.addEventListener("DOMContentLoaded", function(){
+	var AstralWidgetObject = new AstralWidget;
+	AstralWidgetObject.init();
+});
