@@ -773,7 +773,7 @@ var AstralWidget = function(){
 	this.render = function(){
 		document.head.appendChild(this.createElement("style", null, {type: 'text/css'}, [document.createTextNode(this.css)]));
 		document.body.appendChild(this.dom.tree);
-		document.body.removeChild(document.getElementById("widgetScript"));
+		//document.body.removeChild(document.getElementById("widgetScript"));
 	};
 	this.init = function(){
 		this.initDom();
