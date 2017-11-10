@@ -17,6 +17,7 @@ var AstralWidget = function(){
 	this.page = "astralWidget_wrapper__chat";
 	this.checkbox = localStorage.getItem("widgetCheckbox") == "true";
 	this.userInfo = localStorage.getItem("widgetUserInfo") == "true";
+	this.organization_id = document.getElementById("widgetScript").getAttribute("data-id");
 	this.telegramLink = this.subject == "partner" ?
 		"http://telegram.me/astrallBot" :
 		this.subject == "faq" ?
@@ -60,9 +61,12 @@ var AstralWidget = function(){
 		open: (function(){
 			this.dom.widgetWrapper.classList.remove("astralWidget_wrapper__close");
 			if(!this.token || this.token == "null"){
-				this.socket.emit('WIDGET_GET_TOKEN', {subject: this.subject});
+				this.socket.emit('WIDGET_GET_TOKEN', {subject: this.subject, organization_id: this.organization_id});
 			} else {
-				this.socket.emit('GET_SESSION_ID', this.subject + this.token);
+				this.socket.emit('GET_SESSION_ID', {
+					token: this.subject + this.token,
+					organization_id: this.organization_id
+				});
 			}
 		}).bind(this),
 		close: (function(){
@@ -75,14 +79,18 @@ var AstralWidget = function(){
 		}).bind(this),
 		send: (function(){
 			if(this.input){
-				this.socket.emit('WIDGET_MESSAGE', this.input);
+				this.socket.emit('WIDGET_MESSAGE', {
+					message: this.input,
+					organization_id: this.organization_id
+				});
 				this.dom.widgetInput.value = "";
 				this.input = "";
 				localStorage.setItem("widgetInput", "");
 			}
 			if((this.client_name || this.client_email || this.client_phone) && !this.client_exist){
 				var result = {
-					session_id: this.sessionId
+					session_id: this.sessionId,
+					organization_id: this.organization_id
 				};
 				if(this.client_name){
 					result.client_name = this.client_name;
@@ -109,7 +117,10 @@ var AstralWidget = function(){
 				if(this.client_phone){
 					result.client_phone = this.client_phone;
 				}
-				this.socket.emit('WIDGET_CLIENT_INFO', result);
+				this.socket.emit('WIDGET_CLIENT_INFO', {
+					result: result,
+					organization_id: this.organization_id
+				});
 			}
 		}).bind(this),
 		menu: (function(page){
@@ -264,7 +275,10 @@ var AstralWidget = function(){
 		setToken: function(token){
 			this.token = token;
 			localStorage.setItem('widgetToken', this.token);
-			this.socket.emit('GET_SESSION_ID', this.subject + this.token);
+			this.socket.emit('GET_SESSION_ID', {
+				token: this.subject + this.token,
+				organization_id: this.organization_id
+			});
 		},
 		setSessionId: function(data){
 			if(data){
