@@ -798,6 +798,10 @@ var AstralWidget = function(){
 	return this;
 };
 window.addEventListener("DOMContentLoaded", function(){
-	var AstralWidgetObject = new AstralWidget;
-	AstralWidgetObject.init();
+	var thisTime = new Date();
+	thisTime = thisTime.getHours() * 60 + thisTime.getMinutes();
+	if(thisTime >= 540 && thisTime <= 1020){
+		var AstralWidgetObject = new AstralWidget;
+		AstralWidgetObject.init();
+	}
 });
