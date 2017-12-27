@@ -285,6 +285,14 @@ var AstralWidget = function(){
 				this.sessionId = data[0].session_id;
 				this.socket.emit('GET_SESSION_DIALOG', this.sessionId);
 			}
+		},
+		remove: function(data){
+			document.body.removeChild(this.dom.tree);
+		},
+		sendInfo: function(){
+			this.socket.emit("WIDGET_INFO", {
+				organization_id: this.organization_id
+			});
 		}
 	};
 	this.initDom = function(){
@@ -783,6 +791,8 @@ var AstralWidget = function(){
 		this.socket.on('GET_SESSION_DIALOG', this.connectionEvents.loadDialog.bind(this));
 		this.socket.on('WIDGET_SET_TOKEN', this.connectionEvents.setToken.bind(this));
 		this.socket.on('GET_SESSION_ID', this.connectionEvents.setSessionId.bind(this));
+		this.socket.on('disconnect', this.connectionEvents.remove.bind(this));
+		this.socket.on('connect', this.connectionEvents.sendInfo.bind(this));
 	};
 	this.render = function(){
 		document.head.appendChild(this.createElement("style", null, {type: 'text/css'}, [document.createTextNode(this.css)]));
