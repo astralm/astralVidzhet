@@ -4,7 +4,7 @@ this.writable=!0,this.emit("open")},n.prototype.onData=function(t){var e=o.decod
 var AstralWidget = function(){
 	this.subject = document.getElementById("widgetScript").getAttribute('data-type');
 	this.test = document.getElementById("widgetScript").getAttribute("data-test");
-	this.socket = io(this.test ? "localhost:5000" : "astralbot.ru:8080");
+	this.socket = io(this.test ? "localhost:5000" : "https://astralbot.ru:8080");
 	this.token = localStorage.getItem('widgetToken');
 	this.client_email = localStorage.getItem('widgetEmail');
 	this.client_name = localStorage.getItem('widgetName');
