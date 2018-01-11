@@ -4,7 +4,7 @@ this.writable=!0,this.emit("open")},n.prototype.onData=function(t){var e=o.decod
 var AstralWidget = function(){
 	this.subject = document.getElementById("widgetScript").getAttribute('data-type');
 	this.test = document.getElementById("widgetScript").getAttribute("data-test");
-	this.socket = io(this.test ? "localhost:5000" : "astralbot.ru:8080");
+	this.socket = io(this.test ? "localhost:5000" : "https://astralbot.ru:8080");
 	this.token = localStorage.getItem('widgetToken');
 	this.client_email = localStorage.getItem('widgetEmail');
 	this.client_name = localStorage.getItem('widgetName');
@@ -13,7 +13,7 @@ var AstralWidget = function(){
 	this.bidMessage = localStorage.getItem("widgetBidMessage");
 	this.callsMessage = localStorage.getItem("widgetCallsMessage");
 	this.input = localStorage.getItem("widgetInput");
-	this.css = ".astralWidget_wrapper *{font-family:'Arial';font-size:14px;font-weight:400;padding:0;margin:0;border:none;text-decoration:none;text-transform:none;line-height:inherit;word-wrap:normal;background:inherit;color:inherit;-webkit-border-radius:0;border-radius:0;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:inherit;-webkit-transform:none;-ms-transform:none;transform:none}.astralWidget_wrapper :before,.astralWidget_wrapper :after{display:none}.astralWidget_wrapper{width:435px;max-height:751px;height:calc(100% - 42px);bottom:20px;right:20px;position:fixed;background:#fff;border:1px solid #ececec;z-index:99999!important}.astralWidget_wrapper__close{display:none}.astralWidget_block{position:relative;width:100%;overflow:auto}.astralWidget_block__title{background:#f8f8f8}.astralWidget_block__bottom{position:absolute;bottom:0}.astralWidget_block__after-checkbox{display:none}.astralWidget_block__after-user-info{display:none}.astralWidget_wrapper__checkbox .astralWidget_block__after-checkbox,.astralWidget_wrapper__user-info .astralWidget_block__after-user-info{display:block}.astralWidget_wrapper__user-info .astralWidget_block__after-checkbox{display:none}.astralWidget_block__bottom-form{padding:15px;background:#f3f3f3}.astralWidget_wrapper__checkbox.astralWidget_wrapper__user-info .astralWidget_block__after-checkbox.astralWidget_block__after-user-info{display:block}.astralWidget_block__top-border{border-top:1px solid #ececec}.astralWidget_title{line-height:68px;text-align:center}.astralWidget_image-button{cursor:pointer}.astralWidget_image-button__right{position:absolute;top:18px;right:12px}.astralWidget_image-button__send{vertical-align:middle}.astralWidget_header-menu-item{display:inline-block;width:20%;text-align:center;padding:15px 0 20px;outline:1px solid #ececec;cursor:pointer;color:#c2c2c2;margin-bottom:1px}.astralWidget_wrapper__chat .astralWidget_header-menu-item__chat,.astralWidget_wrapper__bid .astralWidget_header-menu-item__bid,.astralWidget_wrapper__calls .astralWidget_header-menu-item__calls,.astralWidget_wrapper__addresses .astralWidget_header-menu-item__addresses,.astralWidget_wrapper__social .astralWidget_header-menu-item__social{outline-color:#23b650;background:#23b650;color:#fff}.astralWidget_header-menu-image{display:inline-block;margin-bottom:14px;height:30px;width:auto}.astralWidget_wrapper__chat .astralWidget_header-menu-item__chat .astralWidget_header-menu-image,.astralWidget_wrapper__bid .astralWidget_header-menu-item__bid .astralWidget_header-menu-image,.astralWidget_wrapper__calls .astralWidget_header-menu-item__calls .astralWidget_header-menu-image,.astralWidget_wrapper__addresses .astralWidget_header-menu-item__addresses .astralWidget_header-menu-image,.astralWidget_wrapper__social .astralWidget_header-menu-item__social .astralWidget_header-menu-image{fill:#fff}.astralWidget_layout{display:none;position:relative;height:-webkit-calc(100% - 179px);height:calc(100% - 179px)}.astralWidget_wrapper__chat .astralWidget_layout__chat,.astralWidget_wrapper__bid .astralWidget_layout__bid,.astralWidget_wrapper__calls .astralWidget_layout__calls,.astralWidget_wrapper__addresses .astralWidget_layout__addresses,.astralWidget_wrapper__social .astralWidget_layout__social{display:block}.astralWidget_layout-container{padding:10px 20px;height:100%}.astralWidget_wrapper__chat .astralWidget_layout-container{padding-bottom:120px}.astralWidget_layout-container__overflow{overflow:auto}.astralWidget_checkbox{background:#f3f3f3;padding:10px 15px}.astralWidget_wrapper__checkbox .astralWidget_checkbox{display:none}.astralWidget_checkbox-input{height:32px;float:left;margin-right:10px!important;cursor:pointer}.astralWidget_checkbox-link{color:#0077b3}.astralWidget_input{color:#b3b3b3;outline:1px solid #e0e0e0;height:40px;padding:10px 15px;font-size:13px;outline-offset:0;background:#fff!important}.astralWidget_input__half{width:50%!important}.astralWidget_input__single{display:block;width:100%!important}.astralWidget_input__message{padding:30px 10px!important;width:-webkit-calc(100% - 65px)!important;width:calc(100% - 65px)!important;outline:none;color:#000;border:none!important}.astralWidget_input__big{height:133px;border:1px solid #e0e0e0;background:#fff;color:#b3b3b3;font-size:13px;margin:8px 0;padding-left:7px;resize:none;outline:none}.astralWidget_input__border{height:56px;border:1px solid #e0e0e0;background:#fff;color:#b3b3b3;font-size:13px;margin:23px 0;padding-left:7px;outline:none}.astralWidget_input__error{background:#f9b6b6!important}.astralWidget_button{height:40px;padding:10px 15px;color:#fff;font-size:13px;font-weight:700;background:#23b650;cursor:pointer}.astralWidget_button__single{display:block;margin-top:10px}.astralWidget_button__full-width{width:100%}.astralWidget_button__big{border:none;outline:none;width:100%;height:56px;color:#fff;font-weight:700;font-size:12px;text-transform:uppercase;margin-top:25px}.astralWidget_text{margin:0 0 20px;color:#555;line-height:24px}.astralWidget_text__chat{display:inline-block;padding:25px;-webkit-border-radius:5px;border-radius:5px;margin-bottom:10px;min-width:140px;max-width:80%}.astralWidget_text__float-left{background:#f3f3f3}.astralWidget_text__float-right{background:#23b650;color:#fff;float:right}.astralWidget_date{position:absolute;bottom:15px;font-size:11px;white-space:nowrap;background:none}.astralWidget_date__left{left:10px}.astralWidget_date__right{right:10px}.astralWidget_link{text-decoration:none;color:#0077b3;line-height:initial}.astralWidget_link__single{display:block;margin-top:28px}.astralWidget_link__image{padding:15px 0;border-bottom:1px solid #e7e7e7;cursor:pointer;margin:0}.astralWidget_link__image:last-child{border-bottom:none}.astralWidget_link-text{margin-left:20px;color:#606060;font-weight:700;font-size:14px;line-height:50px}.astralWidget_link-image{height:50px;width:auto;vertical-align:middle}.astralWidget_wrapper__close ~ .astralWidget_open-button{display:block}.astralWidget_open-button{display:none;position:fixed;bottom:54px;right:20px;display:none;cursor:pointer;z-index:99999!important}@media screen and (max-width: 500px){.astralWidget_wrapper{width:100%;height:100%;bottom:0;right:0}.astralWidget_button__big{margin-top:5px}.astralWidget_input__border{margin:3px 0}.astralWidget_link__single{margin-top:12px}.astralWidget_link__image{margin-top:0;padding:13px 0}.astralWidget_layout-container{overflow:auto}}";
+	this.css = ".astralWidget_wrapper *{font-family:'Arial';font-size:14px;font-weight:400;padding:0;margin:0;border:none;text-decoration:none;text-transform:none;line-height:inherit;word-wrap:normal;background:inherit;color:inherit;-webkit-border-radius:0;border-radius:0;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:inherit;-webkit-transform:none;-ms-transform:none;transform:none}.astralWidget_wrapper :before,.astralWidget_wrapper :after{display:none}.astralWidget_wrapper{width:435px;max-height:751px;height:calc(100% - 42px);bottom:20px;right:20px;position:fixed;background:#fff;border:1px solid #ececec;z-index:99999!important}.astralWidget_wrapper__close{display:none}.astralWidget_block{position:relative;width:100%;overflow:auto}.astralWidget_block__title{background:#f8f8f8}.astralWidget_block__bottom{position:absolute;bottom:0}.astralWidget_block__after-checkbox{display:none}.astralWidget_block__after-user-info{display:none}.astralWidget_wrapper__checkbox .astralWidget_block__after-checkbox,.astralWidget_wrapper__user-info .astralWidget_block__after-user-info{display:block}.astralWidget_wrapper__user-info .astralWidget_block__after-checkbox{display:none}.astralWidget_block__bottom-form{padding:15px;background:#f3f3f3}.astralWidget_wrapper__checkbox.astralWidget_wrapper__user-info .astralWidget_block__after-checkbox.astralWidget_block__after-user-info{display:block}.astralWidget_block__top-border{border-top:1px solid #ececec}.astralWidget_title{line-height:68px;text-align:center}.astralWidget_image-button{cursor:pointer}.astralWidget_image-button__right{position:absolute;top:18px;right:12px}.astralWidget_image-button__send{vertical-align:middle}.astralWidget_header-menu-item{display:inline-block;width:20%;text-align:center;padding:15px 0 20px;outline:1px solid #ececec;cursor:pointer;color:#c2c2c2;margin-bottom:1px}.astralWidget_wrapper__chat .astralWidget_header-menu-item__chat,.astralWidget_wrapper__bid .astralWidget_header-menu-item__bid,.astralWidget_wrapper__calls .astralWidget_header-menu-item__calls,.astralWidget_wrapper__addresses .astralWidget_header-menu-item__addresses,.astralWidget_wrapper__social .astralWidget_header-menu-item__social{outline-color:#23b650;background:#23b650;color:#fff}.astralWidget_header-menu-image{display:inline-block;margin-bottom:14px;height:30px;width:auto}.astralWidget_wrapper__chat .astralWidget_header-menu-item__chat .astralWidget_header-menu-image,.astralWidget_wrapper__bid .astralWidget_header-menu-item__bid .astralWidget_header-menu-image,.astralWidget_wrapper__calls .astralWidget_header-menu-item__calls .astralWidget_header-menu-image,.astralWidget_wrapper__addresses .astralWidget_header-menu-item__addresses .astralWidget_header-menu-image,.astralWidget_wrapper__social .astralWidget_header-menu-item__social .astralWidget_header-menu-image{fill:#fff}.astralWidget_layout{display:none;position:relative;height:-webkit-calc(100% - 68px);height:calc(100% - 68px)}.astralWidget_wrapper__chat .astralWidget_layout__chat,.astralWidget_wrapper__bid .astralWidget_layout__bid,.astralWidget_wrapper__calls .astralWidget_layout__calls,.astralWidget_wrapper__addresses .astralWidget_layout__addresses,.astralWidget_wrapper__social .astralWidget_layout__social{display:block}.astralWidget_layout-container{padding:10px 20px;height:100%}.astralWidget_wrapper__chat .astralWidget_layout-container{padding-bottom:120px}.astralWidget_layout-container__overflow{overflow:auto}.astralWidget_checkbox{background:#f3f3f3;padding:10px 15px}.astralWidget_wrapper__checkbox .astralWidget_checkbox{display:none}.astralWidget_checkbox-input{height:32px;float:left;margin-right:10px!important;cursor:pointer}.astralWidget_checkbox-link{color:#0077b3}.astralWidget_input{color:#b3b3b3;outline:1px solid #e0e0e0;height:40px;padding:10px 15px;font-size:13px;outline-offset:0;background:#fff!important}.astralWidget_input__half{width:50%!important}.astralWidget_input__single{display:block;width:100%!important}.astralWidget_input__message{padding:30px 10px!important;width:-webkit-calc(100% - 65px)!important;width:calc(100% - 65px)!important;outline:none;color:#000;border:none!important}.astralWidget_input__big{height:133px;border:1px solid #e0e0e0;background:#fff;color:#b3b3b3;font-size:13px;margin:8px 0;padding-left:7px;resize:none;outline:none}.astralWidget_input__border{height:56px;border:1px solid #e0e0e0;background:#fff;color:#b3b3b3;font-size:13px;margin:23px 0;padding-left:7px;outline:none}.astralWidget_input__error{background:#f9b6b6!important}.astralWidget_button{height:40px;padding:10px 15px;color:#fff;font-size:13px;font-weight:700;background:#23b650;cursor:pointer}.astralWidget_button__single{display:block;margin-top:10px}.astralWidget_button__full-width{width:100%}.astralWidget_button__big{border:none;outline:none;width:100%;height:56px;color:#fff;font-weight:700;font-size:12px;text-transform:uppercase;margin-top:25px}.astralWidget_text{margin:0 0 20px;color:#555;line-height:24px}.astralWidget_text__chat{display:inline-block;padding:25px;-webkit-border-radius:5px;border-radius:5px;margin-bottom:10px;min-width:140px;max-width:80%}.astralWidget_text__float-left{background:#f3f3f3}.astralWidget_text__float-right{background:#23b650;color:#fff;float:right}.astralWidget_date{position:absolute;bottom:15px;font-size:11px;white-space:nowrap;background:none}.astralWidget_date__left{left:10px}.astralWidget_date__right{right:10px}.astralWidget_link{text-decoration:none;color:#0077b3;line-height:initial}.astralWidget_link__single{display:block;margin-top:28px}.astralWidget_link__image{padding:15px 0;border-bottom:1px solid #e7e7e7;cursor:pointer;margin:0}.astralWidget_link__image:last-child{border-bottom:none}.astralWidget_link-text{margin-left:20px;color:#606060;font-weight:700;font-size:14px;line-height:50px}.astralWidget_link-image{height:50px;width:auto;vertical-align:middle}.astralWidget_wrapper__close ~ .astralWidget_open-button{display:block}.astralWidget_open-button{display:none;position:fixed;bottom:54px;right:20px;display:none;cursor:pointer;z-index:99999!important}@media screen and (max-width: 500px){.astralWidget_wrapper{width:100%;height:100%;bottom:0;right:0}.astralWidget_button__big{margin-top:5px}.astralWidget_input__border{margin:3px 0}.astralWidget_link__single{margin-top:12px}.astralWidget_link__image{margin-top:0;padding:13px 0}.astralWidget_layout-container{overflow:auto}}";
 	this.page = "astralWidget_wrapper__chat";
 	this.checkbox = localStorage.getItem("widgetCheckbox") == "true";
 	this.userInfo = localStorage.getItem("widgetUserInfo") == "true";
@@ -134,7 +134,7 @@ var AstralWidget = function(){
 			this.client_email = e.target.value;
 			localStorage.setItem('widgetEmail', this.client_email);
 			this.dom.widgetEmailOne.value = this.client_email;
-			this.dom.widgetEmailTwo.value = this.client_email;
+			//this.dom.widgetEmailTwo.value = this.client_email;
 		}).bind(this),
 		phone: (function(e){
 			this.client_phone = e.target.value;
@@ -146,7 +146,7 @@ var AstralWidget = function(){
 			this.client_name = e.target.value;
 			localStorage.setItem('widgetName', this.client_name);
 			this.dom.widgetNameOne.value = this.client_name;
-			this.dom.widgetNameTwo.value = this.client_name;
+			//this.dom.widgetNameTwo.value = this.client_name;
 		}).bind(this),
 		bidMessage: (function(e){
 			this.bidMessage = e.target.value;
@@ -199,17 +199,17 @@ var AstralWidget = function(){
 		userInfo: (function(){
 			if(!/.*@.*\..*/.test(this.client_email)){
 				this.dom.widgetEmailOne.classList.add("astralWidget_input__error");
-				this.dom.widgetEmailTwo.classList.add("astralWidget_input__error");
+				//this.dom.widgetEmailTwo.classList.add("astralWidget_input__error");
 			} else {
 				this.dom.widgetEmailOne.classList.remove("astralWidget_input__error");
-				this.dom.widgetEmailTwo.classList.remove("astralWidget_input__error");
+				//this.dom.widgetEmailTwo.classList.remove("astralWidget_input__error");
 			}
 			if(!this.client_name){
 				this.dom.widgetNameOne.classList.add("astralWidget_input__error");
-				this.dom.widgetNameTwo.classList.add("astralWidget_input__error");
+				//this.dom.widgetNameTwo.classList.add("astralWidget_input__error");
 			} else {
 				this.dom.widgetNameOne.classList.remove("astralWidget_input__error");
-				this.dom.widgetNameTwo.classList.remove("astralWidget_input__error");
+				//this.dom.widgetNameTwo.classList.remove("astralWidget_input__error");
 			}
 			if(/.*@.*\..*/.test(this.client_email) && this.client_name){
 				this.userInfo = !this.userInfo;
@@ -311,7 +311,7 @@ var AstralWidget = function(){
 							"alt":"Проверка отчетности онлайн",
 							"id": "widgetCloseButton"
 						})
-					]),
+					])/*,
 					this.createElement('div',["astralWidget_block"],null,[
 						this.createElement('ul',["astralWidget_header-menu"],null,[
 							this.createElement('li',["astralWidget_header-menu-item", "astralWidget_header-menu-item__chat"],{
@@ -425,7 +425,7 @@ var AstralWidget = function(){
 								])
 							])
 						])
-					])
+					])*/
 				]),
 				this.createElement('div',["astralWidget_layout", "astralWidget_layout__chat"],null,[
 					this.createElement('div',["astralWidget_layout-container", "astralWidget_layout-container__overflow"],{
@@ -485,7 +485,7 @@ var AstralWidget = function(){
 							})
 						])
 					])
-				]),
+				])/*,
 				this.createElement('div',["astralWidget_layout", "astralWidget_layout__bid"],null,[
 					this.createElement('div',["astralWidget_layout-container"],null,[
 						this.createElement('p',["astralWidget_text"],null,[
@@ -737,7 +737,7 @@ var AstralWidget = function(){
 							])
 						])
 					])
-				])
+				])*/
 			]),
 			this.createElement('img',["astralWidget_open-button"],{
 				"src":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACsAAAArCAYAAADhXXHAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTMyIDc5LjE1OTI4NCwgMjAxNi8wNC8xOS0xMzoxMzo0MCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpkNGQ2ZGI0Yi0wZjVhLTljNDUtYWRkYS04NWQzODAwYzY5ODAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RUQ0MEY5Mjc5NkREMTFFNzkzODhCQ0VCNUY5OTYzODgiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RUQ0MEY5MjY5NkREMTFFNzkzODhCQ0VCNUY5OTYzODgiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6YzcyYzJmYzMtODg5OC0wMDRjLWExNTctNGMyNzY1YTcyNGJiIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOmQ0ZDZkYjRiLTBmNWEtOWM0NS1hZGRhLTg1ZDM4MDBjNjk4MCIv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",
@@ -768,23 +768,23 @@ var AstralWidget = function(){
 				e.preventDefault();
 			}
 		}).bind(this));
-		this.dom.widgetMenuChat.addEventListener("click", this.events.menu.bind({}, "astralWidget_wrapper__chat"));
-		this.dom.widgetMenuBid.addEventListener("click", this.events.menu.bind({}, "astralWidget_wrapper__bid"));
-		this.dom.widgetMenuAddresses.addEventListener("click", this.events.menu.bind({}, "astralWidget_wrapper__addresses"));
-		this.dom.widgetMenuCalls.addEventListener("click", this.events.menu.bind({}, "astralWidget_wrapper__calls"));
-		this.dom.widgetMenuSocial.addEventListener("click", this.events.menu.bind({}, "astralWidget_wrapper__social"));
+		//this.dom.widgetMenuChat.addEventListener("click", this.events.menu.bind({}, "astralWidget_wrapper__chat"));
+		//this.dom.widgetMenuBid.addEventListener("click", this.events.menu.bind({}, "astralWidget_wrapper__bid"));
+		//this.dom.widgetMenuAddresses.addEventListener("click", this.events.menu.bind({}, "astralWidget_wrapper__addresses"));
+		//this.dom.widgetMenuCalls.addEventListener("click", this.events.menu.bind({}, "astralWidget_wrapper__calls"));
+		//this.dom.widgetMenuSocial.addEventListener("click", this.events.menu.bind({}, "astralWidget_wrapper__social"));
 		this.dom.widgetCheckbox.addEventListener("change", this.events.checkbox);
-		this.dom.widgetCheckboxTwo.addEventListener("change", this.events.checkbox);
-		this.dom.widgetCheckboxThree.addEventListener("change", this.events.checkbox);
+		//this.dom.widgetCheckboxTwo.addEventListener("change", this.events.checkbox);
+		//this.dom.widgetCheckboxThree.addEventListener("change", this.events.checkbox);
 		this.dom.widgetEmailOne.addEventListener("input", this.events.email);
-		this.dom.widgetEmailTwo.addEventListener("input", this.events.email);
+		//this.dom.widgetEmailTwo.addEventListener("input", this.events.email);
 		this.dom.widgetNameOne.addEventListener("input", this.events.name);
-		this.dom.widgetNameTwo.addEventListener("input", this.events.name);
-		this.dom.widgetTelOne.addEventListener("input", this.events.phone);
-		this.dom.widgetTelTwo.addEventListener("input", this.events.phone);
-		this.dom.widgetMessageBid.addEventListener("input", this.events.bidMessage);
-		this.dom.widgetSubmitBid.addEventListener("click", this.events.sendBid);
-		this.dom.widgetSubmitCalls.addEventListener("click", this.events.sendCalls);
+		//this.dom.widgetNameTwo.addEventListener("input", this.events.name);
+		//this.dom.widgetTelOne.addEventListener("input", this.events.phone);
+		//this.dom.widgetTelTwo.addEventListener("input", this.events.phone);
+		//this.dom.widgetMessageBid.addEventListener("input", this.events.bidMessage);
+		//this.dom.widgetSubmitBid.addEventListener("click", this.events.sendBid);
+		//this.dom.widgetSubmitCalls.addEventListener("click", this.events.sendCalls);
 		this.dom.widgetUserInfoOne.addEventListener("click", this.events.userInfo);
 	};
 	this.initConnectionEvents = function(){
