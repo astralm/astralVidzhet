@@ -221,7 +221,9 @@ var AstralWidget = function(){
         	if(item.message_client){
         		this.dom.widgetContainer.appendChild(this.createElement("div", ["astralWidget_block"], null, [
         			this.createElement("div", ["astralWidget_text", "astralWidget_text__chat", "astralWidget_text__float-left"], null, [
-        				document.createTextNode(item.message_text),
+        				this.createElement("pre", null, null, [
+        					document.createTextNode(item.message_text)
+        				]),
         				this.createElement("span", ["astralWidget_date", "astralWidget_date__left"], null, [
         					document.createTextNode(moment(item.message_date_create, "YYYY-MM-DD hh:mm:ss").fromNow())
         				])
@@ -231,7 +233,9 @@ var AstralWidget = function(){
 					else {
         		this.dom.widgetContainer.appendChild(this.createElement("div", ["astralWidget_block"], null, [
         			this.createElement("div", ["astralWidget_text", "astralWidget_text__chat", "astralWidget_text__float-right"], null, [
-        				document.createTextNode(item.message_text),
+        				this.createElement("pre", null, null, [
+        					document.createTextNode(item.message_text)
+        				]),
         				this.createElement("span", ["astralWidget_date", "astralWidget_date__right"], null, [
         					document.createTextNode(moment(item.message_date_create, "YYYY-MM-DD hh:mm:ss").fromNow())
         				])
